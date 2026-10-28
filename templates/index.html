@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Password Checker | PassCheck{% endblock %}
+{% block content %}
+<section class="hero"><div class="eyebrow">PASSWORD SECURITY TOOL</div><h1>Make your password<br><span>hard to crack.</span></h1><p class="lead">Check password basics. This demo does not save the password you enter.</p></section>
+<section class="panel">
+<form method="post" action="{{ url_for('check') }}" autocomplete="off">
+<label for="password">Enter a password to assess</label>
+<div class="input-row"><input id="password" name="password" type="password" placeholder="Type a sample password..." required autocomplete="new-password"><button class="secondary" type="button" id="toggle">Show</button></div>
+<button class="primary" type="submit">Check strength <span>→</span></button>
+<p class="privacy">The password is not echoed back after submission. For sensitive accounts, prefer a trusted offline password manager's checker.</p>
+</form>
+{% if result %}
+<div class="result" aria-live="polite"><div class="result-head"><h2>Assessment</h2><span class="pill {{ result.label|lower|replace(' ', '-') }}">{{ result.label }}</span></div>
+<div class="meter"><div class="meter-fill {{ result.label|lower|replace(' ', '-') }}" style="width: {{ (result.score / 5 * 100)|int }}%"></div></div>
+<p class="muted">Basic criteria met: {{ result.score }} of 5. This is a simple heuristic, not a guarantee of real-world security.</p>
+<h3>Checklist</h3><ul class="checks">{% for name, passed in result.checks %}<li><span class="{{ 'yes' if passed else 'no' }}">{{ '✓' if passed else '○' }}</span>{{ name }}</li>{% endfor %}</ul>
+<h3>Suggestions</h3><ul>{% for item in result.feedback %}<li>{{ item }}</li>{% endfor %}</ul></div>
+{% endif %}
+</section>
+<section class="feature-grid"><article><div class="feature-icon">01</div><h3>Length matters</h3><p>Long, unique passphrases are generally harder to guess.</p></article><article><div class="feature-icon">02</div><h3>Mix it up</h3><p>Use a mix of character types, but avoid predictable substitutions.</p></article><article><div class="feature-icon">03</div><h3>Never reuse</h3><p>Give every important account its own unique password.</p></article></section>
+<script>
+const input = document.getElementById('password');
+const toggle = document.getElementById('toggle');
+toggle.addEventListener('click', () => { const visible = input.type === 'password'; input.type = visible ? 'text' : 'password'; toggle.textContent = visible ? 'Hide' : 'Show'; });
+</script>
+{% endblock %}

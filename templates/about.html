@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}About | PassCheck{% endblock %}
+{% block content %}
+<section class="hero compact"><div class="eyebrow">ABOUT THE PROJECT</div><h1>Small app.<br><span>Complete pipeline.</span></h1><p class="lead">A Flask password strength checker packaged for a DevOps CI/CD case study.</p></section>
+<section class="panel"><h2>How it works</h2><p>The server evaluates length and character categories, then returns general improvement suggestions. The entered password is not written to a database or application log.</p><h3>Technology stack</h3><ul><li>Python and Flask for the web application.</li><li>Docker for repeatable container builds.</li><li>Jenkins for continuous integration and delivery.</li><li>Kubernetes Deployment and Service for orchestration.</li><li>Git for source control.</li></ul><p class="callout">This demo uses a basic heuristic. It is not a breach checker or replacement for a password manager.</p></section>
+{% endblock %}
